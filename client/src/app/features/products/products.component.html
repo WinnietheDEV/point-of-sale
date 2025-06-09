@@ -1,1 +1,11 @@
-<p>products works!</p>
+<div class="product-container">
+  @for (product of products(); track product._id) {
+  <div class="product-card">
+    <h3>{{ product.name }}</h3>
+    <p>
+      Price: {{ product.price | currency : "THB" : "symbol-narrow" : "1.2-2" }}
+    </p>
+    <p>Total items ordered: {{ product.ordered | number : "1.0-0" }}</p>
+  </div>
+  }
+</div>

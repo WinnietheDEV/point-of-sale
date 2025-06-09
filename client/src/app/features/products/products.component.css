@@ -1,0 +1,30 @@
+.product-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 16px;
+}
+
+.product-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-10px);
+  cursor: pointer;
+}
+
+.product-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+}
+
+.product-card p {
+  font-size: 1rem;
+  color: #555;
+}

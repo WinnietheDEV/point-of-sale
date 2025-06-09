@@ -1,19 +1,28 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  effect,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { ProductsService } from './products.service';
+import { CurrencyPipe, DecimalPipe, formatNumber } from '@angular/common';
 
 @Component({
   selector: 'app-products',
-  imports: [],
+  imports: [CurrencyPipe, DecimalPipe],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnInit {
   isFetching = signal(false);
   error = signal('');
   private destroyRef = inject(DestroyRef);
   private productsService = inject(ProductsService);
-  places = this.productsService.loadedProducts;
+  products = this.productsService.loadedProducts;
+
   ngOnInit() {
     this.isFetching.set(true);
     const subscription = this.productsService.getProducts().subscribe({
