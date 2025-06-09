@@ -10,7 +10,7 @@ export class ProductsService {
   ) {}
 
   async findAll(): Promise<Product[]> {
-    return await this.productModel.find().exec();
+    return await this.productModel.find().select('name price ordered').exec();
   }
 
   async createProduct(): Promise<Product> {
