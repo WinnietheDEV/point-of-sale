@@ -7,7 +7,7 @@ import { ProductsModule } from './product/product.module';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      'mongodb://root:yourStrongPasswordHere@localhost:27017/golfhistory?authSource=admin',
+      'mongodb://root:yourStrongPasswordHere@localhost:27017/pos?authSource=admin',
     ),
     ProductsModule,
   ],
