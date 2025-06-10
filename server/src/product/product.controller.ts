@@ -13,6 +13,6 @@ export class ProductsController {
 
   @Post('/entry')
   createEntryProduct(): Promise<Product> {
-    return this.productService.createProduct();
+    return this.productService.createEntry();
   }
 }

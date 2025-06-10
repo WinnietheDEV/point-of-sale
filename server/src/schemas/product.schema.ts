@@ -9,7 +9,7 @@ export class Product {
   name: string;
 
   @Prop()
-  description: string;
+  description?: string;
 
   @Prop()
   stock: number;
