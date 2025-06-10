@@ -13,7 +13,7 @@
 ### 1. Clone โปรเจกต์จาก GitHub
 
 ```bash
-git clone https://github.com/your-username/your-project.git
+git clone https://github.com/WinnietheDEV/point-of-sale.git
 ```
 
 ### 2. ตรวจสอบว่าเครื่องมี Docker Desktop หรือไม่
