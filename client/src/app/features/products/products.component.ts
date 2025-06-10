@@ -7,8 +7,8 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { ProductsService } from './products.service';
 import { CurrencyPipe, DecimalPipe, formatNumber } from '@angular/common';
+import { ProductsService } from './services/products.service';
 
 @Component({
   selector: 'app-products',

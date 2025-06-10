@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProductsComponent } from './products.component';
 import { provideHttpClient } from '@angular/common/http';
-import { ProductsService } from './products.service';
+import { ProductsService } from './services/products.service';
 
 describe('ProductsComponent', () => {
   let component: ProductsComponent;
@@ -19,7 +19,7 @@ describe('ProductsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('สร้าง products component', () => {
     expect(component).toBeTruthy();
   });
 });
