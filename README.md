@@ -39,12 +39,19 @@ docker --version
 docker-compose up -d --build
 ```
 
-### 5. การเข้าถึงแอพพลิเคชั่น
+### 5. หากต้องการ seed data
+
+เข้าไปที่ root folder ของโปรเจคและให้รันคำสั่งนี้:
+```bash
+docker-compose exec server npm run seed
+```
+
+### 6. การเข้าถึงแอพพลิเคชั่น
 
 - Frontend: http://localhost:4201
 - Backend: http://localhost:3001
 
-### 6. ปิดระบบทั้งหมด
+### 7. ปิดระบบทั้งหมด
 
 หากต้องการหยุดและลบ container ให้รัน:
 
