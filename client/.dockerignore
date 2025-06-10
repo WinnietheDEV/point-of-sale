@@ -1,0 +1,17 @@
+# Ignore node_modules — you’ll reinstall in the container
+node_modules
+dist
+.tmp
+coverage
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Env and credentials
+.env
+*.env
+
+# Git stuff
+.git
+.gitignore

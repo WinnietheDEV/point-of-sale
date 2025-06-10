@@ -3,6 +3,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, tap, throwError } from 'rxjs';
 import { IProduct } from '../models/products.model';
+import { environment } from '../../../../environements/environement';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class ProductsService {
   loadedProducts = this.products.asReadonly();
   getProducts() {
     return this.fetchProducts(
-      'http://localhost:3000/products',
+      `${environment.backendUrl}/products`,
       'Something went wrong'
     ).pipe(
       tap({

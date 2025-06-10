@@ -1,0 +1,21 @@
+# Node dependencies
+node_modules
+dist
+
+# Build output
+*.log
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Local environment files
+.env
+.env.* # for .env.development, .env.production, etc.
+
+# Git-related
+.git
+.gitignore
