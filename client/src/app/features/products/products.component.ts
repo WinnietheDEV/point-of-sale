@@ -27,6 +27,7 @@ export class ProductsComponent implements OnInit {
     this.isFetching.set(true);
     const subscription = this.productsService.getProducts().subscribe({
       error: (error: Error) => {
+        this.isFetching.set(false);
         this.error.set(error.message);
       },
       complete: () => {
