@@ -2,7 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, tap, throwError } from 'rxjs';
-import { IProduct } from './products.model';
+import { IProduct } from '../models/products.model';
 
 @Injectable({
   providedIn: 'root',
