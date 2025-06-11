@@ -1,13 +1,16 @@
-.main-layout {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  column-gap: 16px;
-  row-gap: 16px;
-  padding: 16px;
-  height: 100vh;
-  box-sizing: border-box;
-  background-color: #f9f9f9;
+.app-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: white;
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  flex-shrink: 0; /* don’t shrink */
+  height: 40px; /* set explicit height */
+}
+
+.app-logo {
+  height: 40px;
 }
 
 app-products,
@@ -50,4 +53,25 @@ app-cart::-webkit-scrollbar {
 app-cart::-webkit-scrollbar-thumb {
   background: #ccc;
   border-radius: 4px;
+}
+
+.main-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  column-gap: 16px;
+  row-gap: 16px;
+  padding: 16px;
+  height: 100vh;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+  overflow: hidden;
+  flex: 1;
+}
+
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
 }

@@ -1,0 +1,19 @@
+.checkout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.price-section {
+  height: 80%;
+}
+
+.button-section {
+  height: 20%;
+  width: 100%;
+}
+
+button {
+  height: 100%;
+  width: 100%;
+}
