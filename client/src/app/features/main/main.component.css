@@ -1,0 +1,53 @@
+.main-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  column-gap: 16px;
+  row-gap: 16px;
+  padding: 16px;
+  height: 100vh;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+}
+
+app-products,
+app-checkout,
+app-cart {
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #fff;
+}
+
+app-products {
+  grid-column: 1 / 2;
+  grid-row: 1 / 4;
+  overflow-y: auto;
+  max-height: calc(100vh - 32px);
+}
+
+app-products::-webkit-scrollbar {
+  width: 8px;
+}
+app-products::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+app-checkout {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
+app-cart {
+  grid-column: 2 / 3;
+  grid-row: 2 / 4;
+  overflow-y: auto;
+}
+
+app-cart::-webkit-scrollbar {
+  width: 8px;
+}
+app-cart::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
