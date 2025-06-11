@@ -15,7 +15,7 @@ export class ProductsService {
   loadedProducts = this.products.asReadonly();
   getProducts() {
     return this.fetchProducts(
-      `${environment.backendUrl}/products`,
+      `${environment.backendUrl || 'http://localhost:3000'}/products`,
       'Something went wrong'
     ).pipe(
       tap({

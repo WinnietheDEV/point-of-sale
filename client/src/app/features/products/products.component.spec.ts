@@ -37,22 +37,19 @@ describe('ProductsComponent', () => {
 
     fixture = TestBed.createComponent(ProductsComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
-  it('สร้าง prodcts component', () => {
+  it('สร้าง products component', () => {
     expect(component).toBeTruthy();
   });
 
   it('อัพเดทค่า products หลังดึงข้อมูลสินค้า ', () => {
-    fixture.detectChanges();
-
     expect(component.isFetching()).toBeFalse();
     expect(component.products()).toEqual(mockProducts);
   });
 
   it('แสดงรายการสินค้าตามข้อมูลสินค้าที่มี พร้อมข้อมูลที่เกี่ยวข้องของสินค้าแต่ละตัว', () => {
-    fixture.detectChanges();
-
     const productCards = fixture.debugElement.queryAll(By.css('.product-card'));
     expect(productCards.length).toBe(2);
 

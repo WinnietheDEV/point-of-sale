@@ -30,13 +30,13 @@ describe('ProductsService', () => {
     httpMock.verify(); // Make sure no unmatched requests remain
   });
 
-  it('ดึงข้อมูลสินค้าด้วยการเรียก API ด้วย method GET ไปที่ http://localhost:3000/products และอัพเดท loadedProducts เป็นข้อมูลสินค้าที่ดึงข้อมูลมา', () => {
+  it('ดึงข้อมูลสินค้าด้วยการเรียก API ด้วย method GET ไปที่ http://localhost:3001/products และอัพเดท loadedProducts เป็นข้อมูลสินค้าที่ดึงข้อมูลมา', () => {
     service.getProducts().subscribe((products) => {
       expect(products).toEqual(mockProducts);
       expect(service.loadedProducts()).toEqual(mockProducts); // signal updated
     });
 
-    const req = httpMock.expectOne('http://localhost:3000/products');
+    const req = httpMock.expectOne('http://localhost:3001/products');
     expect(req.request.method).toBe('GET');
     req.flush(mockProducts);
   });
@@ -52,7 +52,7 @@ describe('ProductsService', () => {
       },
     });
 
-    const req = httpMock.expectOne('http://localhost:3000/products');
+    const req = httpMock.expectOne('http://localhost:3001/products');
     req.flush('Error occurred', { status: 500, statusText: 'Server Error' });
   });
 });

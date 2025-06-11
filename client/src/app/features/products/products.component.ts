@@ -13,7 +13,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-products',
-  imports: [CurrencyPipe, DecimalPipe, RouterLink],
+  imports: [CurrencyPipe, DecimalPipe],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })
