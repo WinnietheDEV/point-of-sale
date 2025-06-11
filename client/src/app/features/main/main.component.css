@@ -26,6 +26,7 @@ app-products {
   grid-row: 1 / 4;
   overflow-y: auto;
   max-height: calc(100vh - 32px);
+  border: 1px solid var(--color-border);
 }
 
 app-products::-webkit-scrollbar {
@@ -39,12 +40,14 @@ app-products::-webkit-scrollbar-thumb {
 app-checkout {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
+  border: 1px solid var(--color-border);
 }
 
 app-cart {
   grid-column: 2 / 3;
   grid-row: 2 / 4;
   overflow-y: auto;
+  border: 1px solid var(--color-border);
 }
 
 app-cart::-webkit-scrollbar {
