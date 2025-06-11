@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Product } from 'src/schemas/product.schema';
 
@@ -10,7 +10,15 @@ export class ProductsService {
   ) {}
 
   async findAll(): Promise<Product[]> {
-    return await this.productModel.find().select('name price ordered').exec();
+    return this.productModel.find().select('name price ordered').exec();
+  }
+
+  async findOneById(id: string): Promise<Product> {
+    const product = await this.productModel.findById(id).exec();
+    if (!product) {
+      throw new NotFoundException(`ไมพบสินค้า ID: ${id}`);
+    }
+    return product;
   }
 
   async createEntry(): Promise<Product> {
