@@ -1,5 +1,30 @@
 <div class="checkout-container">
-  <div class="price-section"></div>
+  <div class="checkout-summary">
+    <div class="row total">
+      <span id="total-label">ยอดรวม</span>
+      <span>฿ 1,200</span>
+    </div>
+    <div class="row discount">
+      <span id="discount-label">ส่วนลด</span>
+      <div class="input-wrapper">
+        <div class="input-relative">
+          <span class="currency-symbol">฿</span>
+        </div>
+        <input
+          type="text"
+          id="discount-value"
+          name="discount-value"
+          [value]="discount"
+          (input)="onDiscountInput($event)"
+          class="discount-input"
+        />
+      </div>
+    </div>
+    <div class="row grand-total">
+      <span id="grand-total-label">ยอดสุทธิ</span>
+      <span>฿ 1,000</span>
+    </div>
+  </div>
   <div class="button-section">
     <button class="btn-primary">ชำระเงิน</button>
   </div>
