@@ -26,4 +26,21 @@ describe('CheckoutComponent', () => {
     const buttonElement = fixture.nativeElement.querySelector('button');
     expect(buttonElement.textContent).toContain('ชำระเงิน');
   });
+
+  it('แสดงยอดรวม', () => {
+    const buttonElement = fixture.nativeElement.querySelector('#total-label');
+    expect(buttonElement.textContent).toContain('ยอดรวม');
+  });
+
+  it('แสดงฟอร์มส่วนลด', () => {
+    const buttonElement =
+      fixture.nativeElement.querySelector('#discount-label');
+    expect(buttonElement.textContent).toContain('ส่วนลด');
+  });
+
+  it('แสดงยอดสุทธิ', () => {
+    const buttonElement =
+      fixture.nativeElement.querySelector('#grand-total-label');
+    expect(buttonElement.textContent).toContain('ยอดสุทธิ');
+  });
 });
