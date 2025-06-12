@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, tap, throwError } from 'rxjs';
@@ -12,6 +12,12 @@ import { IProduct } from '../../products/models/products.model';
 export class CartService {
   private _cart = signal<ICartItem[]>([]);
   cartItems = this._cart.asReadonly();
+  grandTotal = computed(() =>
+    this._cart().reduce(
+      (sum, item) => sum + item.product.price * item.quantity,
+      0
+    )
+  );
 
   addToCart(product: IProduct): void {
     const item = this._cart().find((item) => item.product._id === product._id);
