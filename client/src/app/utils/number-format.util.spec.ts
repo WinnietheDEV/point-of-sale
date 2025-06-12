@@ -26,6 +26,6 @@ describe('formatMoneyInput', () => {
   });
 
   it('คืนเลข 0 ในกรณีที่ลบทุกอย่างใน input', () => {
-    expect(formatMoneyInput('', '0')).toBe('0');
+    expect(formatMoneyInput('', '')).toBe('0');
   });
 });
