@@ -10,12 +10,11 @@ import { IProduct } from '../../products/models/products.model';
   providedIn: 'root',
 })
 export class CartService {
-  private cart = signal<ICartItem[]>([]);
-  cartItems = this.cart.asReadonly();
+  private _cart = signal<ICartItem[]>([]);
+  cartItems = this._cart.asReadonly();
 
   addToCart(product: IProduct): void {
-    const item = this.cart().find((item) => item.product._id === product._id);
-    console.log('product', product);
+    const item = this._cart().find((item) => item.product._id === product._id);
     if (item) {
       if (item.quantity < product.stock) {
         item.quantity++;
@@ -23,7 +22,7 @@ export class CartService {
         alert('สินค้าเกินจำนวนในสต็อก');
       }
     } else {
-      this.cart.update((currentCart) => [
+      this._cart.update((currentCart) => [
         ...currentCart,
         { product, quantity: 1 },
       ]);

@@ -15,7 +15,7 @@ describe('CartService', () => {
 
   beforeEach(() => {
     service = new CartService();
-    service['cart'] = signal<ICartItem[]>([]); // assuming you're using signal
+    service['_cart'] = signal<ICartItem[]>([]); // assuming you're using signal
   });
 
   it('เพิ่ม product เข้าในตะกร้าสินค้า', () => {
@@ -30,7 +30,7 @@ describe('CartService', () => {
 
     service.addToCart(product);
 
-    const cartItems = service['cart']();
+    const cartItems = service['_cart']();
 
     expect(cartItems.length).toBe(1);
     expect(cartItems[0].product._id).toBe('1234567');
@@ -50,7 +50,7 @@ describe('CartService', () => {
     service.addToCart(product);
     service.addToCart(product);
 
-    const cartItems = service['cart']();
+    const cartItems = service['_cart']();
 
     expect(cartItems.length).toBe(1); // ยังมีแค่ 1 ชิ้น
     expect(cartItems[0].quantity).toBe(2); // แต่ quantity เป็น 2
