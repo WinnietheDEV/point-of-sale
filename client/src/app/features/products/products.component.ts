@@ -21,7 +21,7 @@ import { IProduct } from './models/products.model';
 })
 export class ProductsComponent implements OnInit {
   isFetching = signal(false);
-  error = signal('');
+  isError = signal('');
   private cartService = inject(CartService);
   private destroyRef = inject(DestroyRef);
   private productsService = inject(ProductsService);
@@ -32,7 +32,7 @@ export class ProductsComponent implements OnInit {
     const subscription = this.productsService.getProducts().subscribe({
       error: (error: Error) => {
         this.isFetching.set(false);
-        this.error.set(error.message);
+        this.isError.set(error.message);
       },
       complete: () => {
         this.isFetching.set(false);
