@@ -25,7 +25,7 @@ export class ProductsComponent implements OnInit {
   private cartService = inject(CartService);
   private destroyRef = inject(DestroyRef);
   private productsService = inject(ProductsService);
-  products = this.productsService.loadedProducts;
+  productsList = this.productsService.products;
 
   ngOnInit() {
     this.isFetching.set(true);

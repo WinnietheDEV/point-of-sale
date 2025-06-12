@@ -33,7 +33,7 @@ describe('ProductsService', () => {
   it('ดึงข้อมูลสินค้าด้วยการเรียก API ด้วย method GET ไปที่ http://localhost:3001/products และอัพเดท loadedProducts เป็นข้อมูลสินค้าที่ดึงข้อมูลมา', () => {
     service.getProducts().subscribe((products) => {
       expect(products).toEqual(mockProducts);
-      expect(service.loadedProducts()).toEqual(mockProducts);
+      expect(service.products()).toEqual(mockProducts);
     });
 
     const req = httpMock.expectOne('http://localhost:3001/products');
@@ -48,7 +48,7 @@ describe('ProductsService', () => {
       next: () => fail('Expected error'),
       error: (error) => {
         expect(error.message).toBe(errorMsg);
-        expect(service.loadedProducts()).toEqual([]);
+        expect(service.products()).toEqual([]);
       },
     });
 

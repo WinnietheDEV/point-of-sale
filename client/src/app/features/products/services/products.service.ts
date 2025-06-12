@@ -10,9 +10,9 @@ import { environment } from '../../../../environements/environement';
 })
 export class ProductsService {
   private httpClient = inject(HttpClient);
-  private products = signal<IProduct[]>([]);
+  private _products = signal<IProduct[]>([]);
+  products = this._products.asReadonly();
 
-  loadedProducts = this.products.asReadonly();
   getProducts() {
     return this.fetchProducts(
       `${environment.backendUrl || 'http://localhost:3000'}/products`,
@@ -20,7 +20,7 @@ export class ProductsService {
     ).pipe(
       tap({
         next: (products) => {
-          this.products.set(products);
+          this._products.set(products);
         },
       })
     );

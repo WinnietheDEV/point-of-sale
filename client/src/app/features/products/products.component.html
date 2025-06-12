@@ -1,5 +1,5 @@
 <div class="product-container">
-  @for (product of products(); track product._id) {
+  @for (product of productsList(); track product._id) {
   <div class="product-card" (click)="onSelectProduct(product)">
     <h3>{{ product.name }}</h3>
     <p>

@@ -23,7 +23,7 @@ describe('ProductsComponent', () => {
       mockProductsSignal.set(mockProducts);
       return of(mockProducts);
     },
-    loadedProducts: mockProductsSignal.asReadonly(),
+    products: mockProductsSignal.asReadonly(),
   };
 
   beforeEach(async () => {
@@ -46,7 +46,7 @@ describe('ProductsComponent', () => {
 
   it('อัพเดทค่า products หลังดึงข้อมูลสินค้า ', () => {
     expect(component.isFetching()).toBeFalse();
-    expect(component.products()).toEqual(mockProducts);
+    expect(component.productsList()).toEqual(mockProducts);
   });
 
   it('แสดงรายการสินค้าตามข้อมูลสินค้าที่มี พร้อมข้อมูลที่เกี่ยวข้องของสินค้าแต่ละตัว', () => {
@@ -69,7 +69,7 @@ describe('ProductsComponent', () => {
     beforeEach(async () => {
       const errorService = {
         getProducts: () => throwError(() => new Error('Fetch failed')),
-        loadedProducts: signal<IProduct[]>([]).asReadonly(),
+        products: signal<IProduct[]>([]).asReadonly(),
       };
 
       await TestBed.resetTestingModule()
