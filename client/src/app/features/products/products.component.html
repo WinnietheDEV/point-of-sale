@@ -4,9 +4,9 @@
   <div class="product-card" (click)="onSelectProduct(product)">
     <h3>{{ product.name }}</h3>
     <p>
-      Price: {{ product.price | currency : "THB" : "symbol-narrow" : "1.2-2" }}
+      ราคา: {{ product.price | currency : "THB" : "symbol-narrow" : "1.2-2" }}
     </p>
-    <p>Total items ordered: {{ product.ordered | number : "1.0-0" }}</p>
+    <p>จำนวนสินค้าในคลัง: {{ product.stock | number : "1.0-0" }}</p>
   </div>
   } } @else {
   <p>ไม่มีสินค้า</p>
