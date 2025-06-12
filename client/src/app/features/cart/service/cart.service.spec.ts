@@ -83,4 +83,42 @@ describe('CartService', () => {
 
     expect(alertSpy).toHaveBeenCalledWith('สินค้าเกินจำนวนในสต็อก');
   });
+
+  it('คำนวณ grandTotal ได้ถูกต้องเมื่อเพิ่มสินค้า', () => {
+    const product: IProduct = {
+      _id: '1',
+      name: 'จอ 4K',
+      description: 'จอคมชัดระดับ 4K',
+      stock: 10,
+      price: 5000,
+    };
+
+    service.addToCart(product); // quantity = 1
+
+    expect(service.grandTotal()).toBe(5000);
+  });
+
+  it('คำนวณ grandTotal ได้ถูกต้องเมื่อมีสินค้าหลายชิ้น', () => {
+    const product1: IProduct = {
+      _id: '1',
+      name: 'คีย์บอร์ด',
+      description: '',
+      stock: 10,
+      price: 1000,
+    };
+
+    const product2: IProduct = {
+      _id: '2',
+      name: 'เมาส์',
+      description: '',
+      stock: 5,
+      price: 500,
+    };
+
+    service.addToCart(product1);
+    service.addToCart(product2);
+    service.addToCart(product2);
+
+    expect(service.grandTotal()).toBe(1000 + 2 * 500);
+  });
 });
