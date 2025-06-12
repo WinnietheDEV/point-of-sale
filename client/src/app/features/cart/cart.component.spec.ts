@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CartComponent } from './cart.component';
 import { ICartItem } from './model/cart.model';
 import { signal } from '@angular/core';

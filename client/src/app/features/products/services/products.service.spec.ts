@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
   HttpTestingController,
-  provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { ProductsService } from './products.service';
 import { IProduct } from '../models/products.model';
