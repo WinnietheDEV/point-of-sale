@@ -15,6 +15,10 @@ describe('CartComponent', () => {
       product: { _id: '1', name: 'ลำโพงบลูทูธ', stock: 120, price: 999 },
       quantity: 1,
     },
+    {
+      product: { _id: '2', name: 'เม้าส์', stock: 120, price: 100 },
+      quantity: 30,
+    },
   ];
 
   let mockCartSignal = signal<ICartItem[]>(mockCart);
@@ -39,10 +43,22 @@ describe('CartComponent', () => {
   });
 
   it('แสดงรายการสินค้าที่อยู่ในตะกร้า', () => {
+    const cartHeader = fixture.debugElement.queryAll(By.css('.cart-header'));
+    expect(cartHeader.length).toBe(1);
+    const headerCardText = cartHeader[0].nativeElement.textContent;
+    expect(headerCardText).toContain('รายการ');
+    expect(headerCardText).toContain('จำนวน');
+    expect(headerCardText).toContain('ราคา');
     const cartItems = fixture.debugElement.queryAll(By.css('.cart-item'));
-    expect(cartItems.length).toBe(1);
+    expect(cartItems.length).toBe(2);
     const firstCardText = cartItems[0].nativeElement.textContent;
     expect(firstCardText).toContain('ลำโพงบลูทูธ');
     expect(firstCardText).toContain('1');
+    expect(firstCardText).toContain('฿999.00');
+
+    const secondCardText = cartItems[1].nativeElement.textContent;
+    expect(secondCardText).toContain('เม้าส์');
+    expect(secondCardText).toContain('3');
+    expect(secondCardText).toContain('฿3,000.00');
   });
 });
