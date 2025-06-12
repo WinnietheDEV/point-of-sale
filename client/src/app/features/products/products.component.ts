@@ -10,6 +10,8 @@ import {
 import { CurrencyPipe, DecimalPipe, formatNumber } from '@angular/common';
 import { ProductsService } from './services/products.service';
 import { RouterLink } from '@angular/router';
+import { CartService } from '../cart/service/cart.service';
+import { IProduct } from './models/products.model';
 
 @Component({
   selector: 'app-products',
@@ -20,6 +22,7 @@ import { RouterLink } from '@angular/router';
 export class ProductsComponent implements OnInit {
   isFetching = signal(false);
   error = signal('');
+  private cartService = inject(CartService);
   private destroyRef = inject(DestroyRef);
   private productsService = inject(ProductsService);
   products = this.productsService.loadedProducts;
@@ -39,5 +42,9 @@ export class ProductsComponent implements OnInit {
     this.destroyRef.onDestroy(() => {
       subscription.unsubscribe();
     });
+  }
+
+  onSelectProduct(product: IProduct): void {
+    this.cartService.addToCart(product);
   }
 }
