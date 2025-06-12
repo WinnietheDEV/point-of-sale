@@ -22,10 +22,14 @@ export class CartService {
         alert('สินค้าเกินจำนวนในสต็อก');
       }
     } else {
-      this._cart.update((currentCart) => [
-        ...currentCart,
-        { product, quantity: 1 },
-      ]);
+      if (product.stock >= 1) {
+        this._cart.update((currentCart) => [
+          ...currentCart,
+          { product, quantity: 1 },
+        ]);
+      } else {
+        alert('สินค้าเกินจำนวนในสต็อก');
+      }
     }
   }
 }
