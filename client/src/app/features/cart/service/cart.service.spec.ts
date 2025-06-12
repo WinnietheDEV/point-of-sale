@@ -24,7 +24,6 @@ describe('CartService', () => {
       name: 'เนื้อสันใน',
       description: 'เนื้อสันในอย่างดี จากหมูที่ถูกเลี้ยงโดยหญ้าคุณภาพ',
       stock: 50,
-      ordered: 100,
       price: 140,
     };
 
@@ -43,7 +42,6 @@ describe('CartService', () => {
       name: 'เนื้อสันใน',
       description: '',
       stock: 50,
-      ordered: 100,
       price: 140,
     };
 

@@ -12,7 +12,7 @@ describe('CartComponent', () => {
 
   const mockCart: ICartItem[] = [
     {
-      product: { _id: '1', name: 'iPhone', stock: 120, price: 999, ordered: 0 },
+      product: { _id: '1', name: 'ลำโพงบลูทูธ', stock: 120, price: 999 },
       quantity: 1,
     },
   ];

@@ -12,8 +12,8 @@ describe('ProductsService', () => {
   let httpMock: HttpTestingController;
 
   const mockProducts: IProduct[] = [
-    { _id: '1', name: 'iPhone', stock: 120, price: 999, ordered: 0 },
-    { _id: '2', name: 'MacBook', stock: 3, price: 1999, ordered: 15 },
+    { _id: '1', name: 'iPhone', stock: 120, price: 999 },
+    { _id: '2', name: 'MacBook', stock: 3, price: 1999 },
   ];
 
   beforeEach(() => {

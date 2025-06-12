@@ -16,9 +16,6 @@ export class Product {
 
   @Prop()
   price: number;
-
-  @Prop()
-  ordered: number;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
