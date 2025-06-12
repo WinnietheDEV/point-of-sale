@@ -1,0 +1,33 @@
+.cart-header {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.item-name {
+  flex-basis: 200px;
+  flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-qty {
+  flex-basis: 80px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.item-price {
+  flex-basis: 120px;
+  flex-shrink: 0;
+  text-align: right;
+}

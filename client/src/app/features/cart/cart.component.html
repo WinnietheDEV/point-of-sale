@@ -1,6 +1,22 @@
-@if (itemsInCart().length > 0) { @for (item of itemsInCart(); track
-item.product._id) {
-<div class="cart-item">{{ item.product.name }} x {{ item.quantity }}</div>
+@if (itemsInCart().length > 0) {
+<div class="cart-header" key="card-header">
+  <div class="item-name">รายการ</div>
+  <div class="item-qty">จำนวน</div>
+  <div class="item-price">ราคา</div>
+</div>
+@for (item of itemsInCart(); track item.product._id) {
+
+<div class="cart-item">
+  <div class="item-name">{{ item.product.name }}</div>
+  <div class="item-qty">{{ item.quantity }}</div>
+  <div class="item-price">
+    {{
+      item.product.price * item.quantity
+        | currency : "THB" : "symbol-narrow" : "1.2-2"
+    }}
+  </div>
+</div>
+
 } } @else {
 <div class="empty-cart">ไม่มีสินค้าในตะกร้า</div>
 }
