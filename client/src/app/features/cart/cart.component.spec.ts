@@ -42,7 +42,7 @@ describe('CartComponent', () => {
     const cartItems = fixture.debugElement.queryAll(By.css('.cart-item'));
     expect(cartItems.length).toBe(1);
     const firstCardText = cartItems[0].nativeElement.textContent;
-    expect(firstCardText).toContain('iPhone');
+    expect(firstCardText).toContain('ลำโพงบลูทูธ');
     expect(firstCardText).toContain('1');
   });
 });
