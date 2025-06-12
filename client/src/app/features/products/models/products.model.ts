@@ -6,3 +6,17 @@ export interface IProduct {
   ordered: number;
   description?: string;
 }
+
+export interface IProductsLists {
+  page: number;
+  limit: number;
+  data: IProduct[];
+}
+
+interface IGetProductsParams {
+  page: number;
+  limit: number;
+  sort: string;
+  order: 'desc' | 'asc';
+  search: string;
+}
