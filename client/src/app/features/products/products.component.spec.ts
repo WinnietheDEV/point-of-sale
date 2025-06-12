@@ -65,6 +65,18 @@ describe('ProductsComponent', () => {
     expect(secondCardText).toContain('Total items ordered: 15');
   });
 
+  it('แสดงข้อความ "ไม่มีสินค้า" เมื่อไม่มีข้อมูลสินค้า', () => {
+    mockProductsSignal.set([]);
+
+    fixture.detectChanges();
+
+    const productCards = fixture.debugElement.queryAll(By.css('.product-card'));
+    expect(productCards.length).toBe(0);
+
+    const emptyText = fixture.debugElement.nativeElement.textContent;
+    expect(emptyText).toContain('ไม่มีสินค้า');
+  });
+
   describe('Products component alternative cases', () => {
     beforeEach(async () => {
       const errorService = {
@@ -89,7 +101,7 @@ describe('ProductsComponent', () => {
     it('อัพเดทค่า error และ isFetchign หลังดึงข้อมูลสินค้าแล้วเกิด error', () => {
       fixture.detectChanges();
 
-      expect(component.error()).toBe('Fetch failed');
+      expect(component.isError()).toBe('Fetch failed');
       expect(component.isFetching()).toBeFalse();
     });
   });
