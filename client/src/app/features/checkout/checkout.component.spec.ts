@@ -1,16 +1,38 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CheckoutComponent } from './checkout.component';
-import { provideHttpClient } from '@angular/common/http';
+import { computed, signal } from '@angular/core';
+import { ICartItem } from '../cart/model/cart.model';
+import { CartService } from '../cart/service/cart.service';
 
 describe('CheckoutComponent', () => {
   let component: CheckoutComponent;
   let fixture: ComponentFixture<CheckoutComponent>;
 
+  const mockCart = signal<ICartItem[]>([
+    {
+      product: { name: 'เมาส์', price: 500, stock: 10, description: '' },
+      quantity: 2,
+    },
+    {
+      product: { name: 'คีย์บอร์ด', price: 1000, stock: 5, description: '' },
+      quantity: 1,
+    },
+  ]);
+
+  const mockCartService = {
+    totalPrice: computed(() =>
+      mockCart().reduce(
+        (sum, item) => sum + item.product.price * item.quantity,
+        0
+      )
+    ),
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [CheckoutComponent],
-      providers: [provideHttpClient()],
+      providers: [{ provide: CartService, useValue: mockCartService }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CheckoutComponent);
@@ -28,7 +50,8 @@ describe('CheckoutComponent', () => {
   });
 
   it('แสดงยอดรวม', () => {
-    const buttonElement = fixture.nativeElement.querySelector('#total-label');
+    const buttonElement =
+      fixture.nativeElement.querySelector('#total-price-label');
     expect(buttonElement.textContent).toContain('ยอดรวม');
   });
 
@@ -38,9 +61,15 @@ describe('CheckoutComponent', () => {
     expect(buttonElement.textContent).toContain('ส่วนลด');
   });
 
-  it('แสดงยอดสุทธิ', () => {
+  it('แสดงยอดรวม', () => {
     const buttonElement =
-      fixture.nativeElement.querySelector('#grand-total-label');
-    expect(buttonElement.textContent).toContain('ยอดสุทธิ');
+      fixture.nativeElement.querySelector('#total-price-label');
+    expect(buttonElement.textContent).toContain('ยอดรวม');
+  });
+
+  it('แสดงยอดรวมถูกต้อง', () => {
+    const totalPriceText =
+      fixture.nativeElement.querySelector('#total-price-value')?.textContent;
+    expect(totalPriceText).toContain('2,000');
   });
 });
