@@ -1,1 +1,6 @@
-<p>cart works!</p>
+@if (cartItems().length > 0) { @for (item of cartItems(); track
+item.product._id) {
+<div>{{ item.product.name }} x {{ item.quantity }}</div>
+} } @else {
+<div class="empty-cart">ไม่มีสินค้าในตะกร้า</div>
+}
