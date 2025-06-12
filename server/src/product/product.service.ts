@@ -10,7 +10,7 @@ export class ProductsService {
   ) {}
 
   async findAll(): Promise<Product[]> {
-    return this.productModel.find().select('name price ordered stock').exec();
+    return this.productModel.find().select('name price stock').exec();
   }
 
   async findOneById(id: string): Promise<Product> {
@@ -19,17 +19,6 @@ export class ProductsService {
       throw new NotFoundException(`ไมพบสินค้า ID: ${id}`);
     }
     return product;
-  }
-
-  async createEntry(): Promise<Product> {
-    return new this.productModel({
-      name: 'VS assasin 47',
-      description:
-        'A professional badminton racket tailored to those who serious about badminton',
-      stock: 72,
-      price: 2200,
-      ordered: 0,
-    }).save();
   }
 
   async create(product: Product): Promise<Product> {
