@@ -1,8 +1,4 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
-
-import { HttpClient } from '@angular/common/http';
-import { catchError, map, tap, throwError } from 'rxjs';
-import { environment } from '../../../../environements/environement';
+import { computed, effect, Injectable, signal } from '@angular/core';
 import { ICartItem } from '../model/cart.model';
 import { IProduct } from '../../products/models/products.model';
 
@@ -12,7 +8,7 @@ import { IProduct } from '../../products/models/products.model';
 export class CartService {
   private _cart = signal<ICartItem[]>([]);
   cartItems = this._cart.asReadonly();
-  grandTotal = computed(() =>
+  totalPrice = computed(() =>
     this._cart().reduce(
       (sum, item) => sum + item.product.price * item.quantity,
       0
@@ -20,19 +16,25 @@ export class CartService {
   );
 
   addToCart(product: IProduct): void {
-    const item = this._cart().find((item) => item.product._id === product._id);
-    if (item) {
-      if (item.quantity < product.stock) {
-        item.quantity++;
+    const itemIndex = this._cart().findIndex(
+      (item) => item.product._id === product._id
+    );
+    if (itemIndex !== -1) {
+      const currentCart = [...this._cart()];
+      const item = currentCart[itemIndex];
+
+      if (item.quantity < item.product.stock) {
+        currentCart[itemIndex] = {
+          ...item,
+          quantity: item.quantity + 1,
+        };
+        this._cart.set(currentCart);
       } else {
         alert('สินค้าเกินจำนวนในสต็อก');
       }
     } else {
       if (product.stock >= 1) {
-        this._cart.update((currentCart) => [
-          ...currentCart,
-          { product, quantity: 1 },
-        ]);
+        this._cart.update((cart) => [...cart, { product, quantity: 1 }]);
       } else {
         alert('สินค้าเกินจำนวนในสต็อก');
       }

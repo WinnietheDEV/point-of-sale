@@ -1,8 +1,10 @@
 <div class="checkout-container">
   <div class="checkout-summary">
-    <div class="row total">
-      <span id="total-label">ยอดรวม</span>
-      <span>฿1,200</span>
+    <div class="row total-price">
+      <span id="total-price-label">ยอดรวม</span>
+      <span id="total-price-value">
+        {{ totalPrice() | currency : "THB" : "symbol-narrow" : "1.2-2" }}</span
+      >
     </div>
     <div class="row discount">
       <span id="discount-label">ส่วนลด</span>
@@ -22,7 +24,11 @@
     </div>
     <div class="row grand-total">
       <span id="grand-total-label">ยอดสุทธิ</span>
-      <span>฿1,000</span>
+      <span id="grand-total-value">
+        <!-- {{
+          totalPrice() - discount | currency : "THB" : "symbol-narrow" : "1.2-2"
+        }}</span -->
+      </span>
     </div>
   </div>
   <div class="button-section">
