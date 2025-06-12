@@ -1,5 +1,6 @@
 <div class="product-container">
-  @for (product of productsList(); track product._id) {
+  @if (productsList().length > 0) { @for (product of productsList(); track
+  product._id) {
   <div class="product-card" (click)="onSelectProduct(product)">
     <h3>{{ product.name }}</h3>
     <p>
@@ -7,5 +8,7 @@
     </p>
     <p>Total items ordered: {{ product.ordered | number : "1.0-0" }}</p>
   </div>
+  } } @else {
+  <p>ไม่มีสินค้า</p>
   }
 </div>
