@@ -1,4 +1,4 @@
-import { formatMoneyInput } from './number-format.util';
+import { formatMoneyInput, unformatMoneyString } from './number-format.util';
 
 describe('formatMoneyInput', () => {
   it('คืนเลขที่พิมพ์ ในกรณีที่พิมพ์เลขหลังค่าเริ่มต้นที่เป็น 0', () => {
@@ -27,5 +27,23 @@ describe('formatMoneyInput', () => {
 
   it('คืนเลข 0 ในกรณีที่ลบทุกอย่างใน input', () => {
     expect(formatMoneyInput('', '')).toBe('0');
+  });
+});
+
+describe('unformatMoneyString', () => {
+  it('แปลงเลขมี comma เป็นตัวเลข', () => {
+    expect(unformatMoneyString('1,234')).toBe(1234);
+  });
+
+  it('แปลงเลขมี comma และจุดทศนิยม', () => {
+    expect(unformatMoneyString('1,234.56')).toBe(1234.56);
+  });
+
+  it('คืน 0 ถ้าเป็น string ว่าง', () => {
+    expect(unformatMoneyString('')).toBe(0);
+  });
+
+  it('คืน 0 ถ้าไม่ใช่ตัวเลข', () => {
+    expect(unformatMoneyString('abc')).toBe(0);
   });
 });

@@ -21,6 +21,7 @@ describe('CheckoutComponent', () => {
   ]);
 
   const mockCartService = {
+    cartItems: mockCart.asReadonly(),
     totalPrice: computed(() =>
       mockCart().reduce(
         (sum, item) => sum + item.product.price * item.quantity,
@@ -71,5 +72,25 @@ describe('CheckoutComponent', () => {
     const totalPriceText =
       fixture.nativeElement.querySelector('#total-price-value')?.textContent;
     expect(totalPriceText).toContain('2,000');
+  });
+
+  it('แสดงยอดสุทธิถูกต้องหลังจากหักส่วนลด', () => {
+    component.discount.set('1,500.00');
+    fixture.detectChanges();
+
+    const grandTotalText =
+      fixture.nativeElement.querySelector('#grand-total-value')?.textContent;
+
+    expect(grandTotalText).toContain('500.00');
+  });
+
+  it('ปุ่มชำระเงินถูก disabled ถ้าตะกร้าว่าง', () => {
+    mockCart.set([]);
+    fixture.detectChanges();
+
+    expect(component.isDisabledCheckoutButton).toBeTrue();
+
+    const button = fixture.nativeElement.querySelector('#checkout-button');
+    expect(button.disabled).toBeTrue();
   });
 });
