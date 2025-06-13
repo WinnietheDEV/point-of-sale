@@ -39,3 +39,8 @@ export function formatMoneyInput(
 
   return formatted;
 }
+
+export function unformatMoneyString(money: string) {
+  const result = parseFloat(money.replace(/,/g, ''));
+  return isNaN(result) ? 0 : result;
+}
