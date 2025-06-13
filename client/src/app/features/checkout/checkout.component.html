@@ -16,7 +16,7 @@
           type="text"
           id="discount-value"
           name="discount-value"
-          [value]="discount"
+          [value]="discount()"
           (input)="onDiscountInput($event)"
           class="discount-input"
         />
@@ -25,13 +25,17 @@
     <div class="row grand-total">
       <span id="grand-total-label">ยอดสุทธิ</span>
       <span id="grand-total-value">
-        <!-- {{
-          totalPrice() - discount | currency : "THB" : "symbol-narrow" : "1.2-2"
-        }}</span -->
-      </span>
+        {{ grandTotal() | currency : "THB" : "symbol-narrow" : "1.2-2" }}</span
+      >
     </div>
   </div>
   <div class="button-section">
-    <button class="btn-primary">ชำระเงิน</button>
+    <button
+      class="btn-primary"
+      id="checkout-button"
+      [disabled]="isDisabledCheckoutButton"
+    >
+      ชำระเงิน
+    </button>
   </div>
 </div>
