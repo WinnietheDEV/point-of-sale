@@ -1,7 +1,7 @@
 <div class="checkout-container">
   <div class="checkout-summary">
     <div class="row total-price">
-      <span id="total-price-label">ยอดรวม</span>
+      <span id="total-price-label">ราคารวม</span>
       <span id="total-price-value">
         {{ totalPrice() | currency : "THB" : "symbol-narrow" : "1.2-2" }}</span
       >
@@ -23,17 +23,18 @@
       </div>
     </div>
     <div class="row grand-total">
-      <span id="grand-total-label">ยอดสุทธิ</span>
+      <span id="grand-total-label">ราคาสุทธิ</span>
       <span id="grand-total-value">
         {{ grandTotal() | currency : "THB" : "symbol-narrow" : "1.2-2" }}</span
       >
     </div>
   </div>
-  <div class="button-section">
+  <div class="btn-section">
     <button
       class="btn-primary"
-      id="checkout-button"
-      [disabled]="isDisabledCheckoutButton"
+      id="checkout-btn"
+      [disabled]="isDisabledCheckoutButton()"
+      (click)="onOpenCheckoutModal()"
     >
       ชำระเงิน
     </button>
