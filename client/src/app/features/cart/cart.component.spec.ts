@@ -41,7 +41,11 @@ describe('CartComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('แสดงรายการสินค้าที่อยู่ในตะกร้า', () => {
+  it('ใช้ค่า cartItems', () => {
+    expect(component.itemsInCart()).toBe(mockCartService.cartItems());
+  });
+
+  it('แสดงรายการสินค้าในตะกร้าประกอบด้วยข้อมูล ชื่อสินค้า จำนวนในตะกร้า และราคา', () => {
     const cartHeader = fixture.debugElement.queryAll(By.css('.cart-header'));
     expect(cartHeader.length).toBe(1);
     const headerCardText = cartHeader[0].nativeElement.textContent;

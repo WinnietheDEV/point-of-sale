@@ -12,8 +12,8 @@ describe('ProductsComponent', () => {
   let fixture: ComponentFixture<ProductsComponent>;
 
   const mockProducts: IProduct[] = [
-    { _id: '1', name: 'iPhone', stock: 0, price: 999 },
-    { _id: '2', name: 'MacBook', stock: 15, price: 1999 },
+    { _id: '1', name: 'คอมพิวเตอร์', price: 20000, stock: 30 },
+    { _id: '2', name: 'พัดลมระบายความร้อน', price: 500, stock: 50 },
   ];
 
   let mockProductsSignal = signal<IProduct[]>([]);
@@ -56,13 +56,13 @@ describe('ProductsComponent', () => {
     const firstCardText = productCards[0].nativeElement.textContent;
     const secondCardText = productCards[1].nativeElement.textContent;
 
-    expect(firstCardText).toContain('iPhone');
-    expect(firstCardText).toContain('฿999.00');
-    expect(firstCardText).toContain('จำนวนสินค้าในคลัง: 0');
+    expect(firstCardText).toContain('คอมพิวเตอร์');
+    expect(firstCardText).toContain('฿20,000');
+    expect(firstCardText).toContain('จำนวนสินค้าในคลัง: 30');
 
-    expect(secondCardText).toContain('MacBook');
-    expect(secondCardText).toContain('฿1,999.00');
-    expect(secondCardText).toContain('จำนวนสินค้าในคลัง: 15');
+    expect(secondCardText).toContain('พัดลมระบายความร้อน');
+    expect(secondCardText).toContain('฿500.00');
+    expect(secondCardText).toContain('จำนวนสินค้าในคลัง: 50');
   });
 
   it('แสดงข้อความ "ไม่มีสินค้า" เมื่อไม่มีข้อมูลสินค้า', () => {

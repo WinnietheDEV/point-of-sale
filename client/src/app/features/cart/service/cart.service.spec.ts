@@ -1,9 +1,3 @@
-import { TestBed } from '@angular/core/testing';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-  provideHttpClientTesting,
-} from '@angular/common/http/testing';
 import { CartService } from './cart.service';
 import { signal } from '@angular/core';
 import { ICartItem } from '../model/cart.model';
@@ -14,16 +8,15 @@ describe('CartService', () => {
 
   beforeEach(() => {
     service = new CartService();
-    service['_cart'] = signal<ICartItem[]>([]); // assuming you're using signal
+    service['_cart'] = signal<ICartItem[]>([]);
   });
 
   it('เพิ่ม product เข้าในตะกร้าสินค้า', () => {
     const product: IProduct = {
       _id: '1234567',
-      name: 'แทบเลต ขนาด 16.8 นิ้ว',
-      description: 'แทบเลตจอ Amoled ขนาด 16.8 นิ้ว',
-      stock: 50,
-      price: 140,
+      name: 'ตอมพิวเตอร์',
+      stock: 30,
+      price: 1000,
     };
 
     service.addToCart(product);
@@ -38,10 +31,9 @@ describe('CartService', () => {
   it('เพิ่มจำนวนสินค้าเดิมถ้ากดซ้ำ', () => {
     const product: IProduct = {
       _id: '1234567',
-      name: 'แทบเลต ขนาด 16.8 นิ้ว',
-      description: 'แทบเลตจอ Amoled ขนาด 16.8 นิ้ว',
-      stock: 50,
-      price: 140,
+      name: 'ตอมพิวเตอร์',
+      stock: 30,
+      price: 1000,
     };
 
     service.addToCart(product);
@@ -49,17 +41,16 @@ describe('CartService', () => {
 
     const cartItems = service['_cart']();
 
-    expect(cartItems.length).toBe(1); // ยังมีแค่ 1 ชิ้น
-    expect(cartItems[0].quantity).toBe(2); // แต่ quantity เป็น 2
+    expect(cartItems.length).toBe(1);
+    expect(cartItems[0].quantity).toBe(2);
   });
 
   it('แสดง alert ถ้าจำนวนสินค้าเกิน stock', () => {
     const product: IProduct = {
       _id: '1234567',
-      name: 'แทบเลต ขนาด 16.8 นิ้ว',
-      description: 'แทบเลตจอ Amoled ขนาด 16.8 นิ้ว',
+      name: 'ตอมพิวเตอร์',
       stock: 1,
-      price: 140,
+      price: 1000,
     };
 
     service.addToCart(product);
@@ -86,14 +77,14 @@ describe('CartService', () => {
 
   it('คำนวณราคารวมได้ถูกต้องเมื่อเพิ่มสินค้า', () => {
     const product: IProduct = {
-      _id: '1',
+      _id: '73638893',
       name: 'จอ 4K',
       description: 'จอคมชัดระดับ 4K',
       stock: 10,
       price: 5000,
     };
 
-    service.addToCart(product); // quantity = 1
+    service.addToCart(product);
 
     expect(service.totalPrice()).toBe(5000);
   });
