@@ -10,7 +10,7 @@ export class ProductsService {
   ) {}
 
   async findAll(): Promise<Product[]> {
-    return this.productModel.find().select('name price stock').exec();
+    return this.productModel.find().select('name price stock').lean().exec();
   }
 
   async findOneById(id: string): Promise<Product> {
@@ -19,10 +19,6 @@ export class ProductsService {
       throw new NotFoundException(`ไมพบสินค้า ID: ${id}`);
     }
     return product;
-  }
-
-  async create(product: Product): Promise<Product> {
-    return new this.productModel(product).save();
   }
 
   async createMany(products: Product[]): Promise<Product[]> {

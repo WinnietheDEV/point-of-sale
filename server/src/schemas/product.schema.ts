@@ -1,20 +1,17 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
-
-export type ProductDocument = HydratedDocument<Product>;
 
 @Schema()
 export class Product {
-  @Prop()
+  @Prop({ required: true })
   name: string;
 
-  @Prop()
+  @Prop({ default: '' })
   description?: string;
 
-  @Prop()
+  @Prop({ required: true, min: 0 })
   stock: number;
 
-  @Prop()
+  @Prop({ required: true, min: 0 })
   price: number;
 }
 
