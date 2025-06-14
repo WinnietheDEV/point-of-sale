@@ -6,7 +6,7 @@ import {
 } from '../../utils/number-format.util';
 import { CartService } from '../cart/service/cart.service';
 import { CurrencyPipe } from '@angular/common';
-// test change git user
+
 @Component({
   selector: 'app-checkout',
   imports: [FormsModule, CurrencyPipe],
