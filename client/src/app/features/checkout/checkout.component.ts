@@ -14,15 +14,21 @@ import { CurrencyPipe } from '@angular/common';
   styleUrl: './checkout.component.css',
 })
 export class CheckoutComponent {
-  discount = signal<string>('0');
   private cartService = inject(CartService);
   readonly totalPrice = this.cartService.totalPrice;
+  discount = signal<string>('0');
   grandTotal = computed(() => {
     const discount = unformatMoneyString(this.discount());
     return this.totalPrice() - discount;
   });
-  readonly isDisabledCheckoutButton =
-    this.cartService.cartItems().length < 1 || this.grandTotal() < 0;
+  readonly isDisabledCheckoutButton = computed(() => {
+    return this.cartService.cartItems().length < 1 || this.grandTotal() < 0;
+  });
+  isCheckoutModalOpen = signal(false);
+
+  onOpenCheckoutModal() {
+    this.isCheckoutModalOpen.set(true);
+  }
 
   onDiscountInput(event: Event): void {
     const input = event.target as HTMLInputElement;
