@@ -15,10 +15,9 @@ export class CheckoutService {
   makeTransaction(transaction: ITransaction) {
     const url = `${
       environment.backendUrl || 'http://localhost:3000'
-    }/transactions`;
-
+    }/transaction`;
     return this.httpClient.post<ITransaction>(url, transaction).pipe(
-      tap((tx) => this._lastTransaction.set(tx)),
+      tap((transaction) => this._lastTransaction.set(transaction)),
       catchError((error) =>
         throwError(() => new Error('Something went wrong during checkout'))
       )
