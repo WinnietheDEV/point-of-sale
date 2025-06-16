@@ -108,7 +108,6 @@ describe('CheckoutModalComponent', () => {
     expect(grandTotalEl.textContent).toContain('1,500');
   });
 
-  // 6. Template: pay rendered
   it('แสดงจำนวนที่ชำระ', () => {
     component.grandTotal = 1500;
     fixture.detectChanges();
@@ -118,7 +117,6 @@ describe('CheckoutModalComponent', () => {
     expect(payEl.textContent).toContain('1,500');
   });
 
-  // 7. Template: change rendered
   it('แสดงเงินทอน', () => {
     component.grandTotal = 1500;
     fixture.detectChanges();
