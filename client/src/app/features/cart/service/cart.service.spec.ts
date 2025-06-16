@@ -12,11 +12,12 @@ describe('CartService', () => {
   });
 
   it('เพิ่ม product เข้าในตะกร้าสินค้า', () => {
-    const product: IProduct = {
+    const product: ICartItem = {
       _id: '1234567',
       name: 'ตอมพิวเตอร์',
       stock: 30,
       price: 1000,
+      quantity: 1,
     };
 
     service.addToCart(product);
@@ -24,16 +25,17 @@ describe('CartService', () => {
     const cartItems = service['_cart']();
 
     expect(cartItems.length).toBe(1);
-    expect(cartItems[0].product._id).toBe('1234567');
+    expect(cartItems[0]._id).toBe('1234567');
     expect(cartItems[0].quantity).toBe(1);
   });
 
   it('เพิ่มจำนวนสินค้าเดิมถ้ากดซ้ำ', () => {
-    const product: IProduct = {
+    const product: ICartItem = {
       _id: '1234567',
       name: 'ตอมพิวเตอร์',
       stock: 30,
       price: 1000,
+      quantity: 1,
     };
 
     service.addToCart(product);
@@ -46,11 +48,12 @@ describe('CartService', () => {
   });
 
   it('แสดง alert ถ้าจำนวนสินค้าเกิน stock', () => {
-    const product: IProduct = {
+    const product: ICartItem = {
       _id: '1234567',
       name: 'ตอมพิวเตอร์',
       stock: 1,
       price: 1000,
+      quantity: 1,
     };
 
     service.addToCart(product);
@@ -61,12 +64,12 @@ describe('CartService', () => {
   });
 
   it('แสดง alert ถ้าพยายามเพิ่มสินค้าที่ stock = 0', () => {
-    const product: IProduct = {
+    const product: ICartItem = {
       _id: '9999999',
       name: 'หูฟัง USB',
-      description: '',
       stock: 0,
       price: 100,
+      quantity: 1,
     };
 
     const alertSpy = spyOn(window, 'alert'); // 👈 spy before calling
@@ -76,12 +79,12 @@ describe('CartService', () => {
   });
 
   it('คำนวณราคารวมได้ถูกต้องเมื่อเพิ่มสินค้า', () => {
-    const product: IProduct = {
+    const product: ICartItem = {
       _id: '73638893',
       name: 'จอ 4K',
-      description: 'จอคมชัดระดับ 4K',
       stock: 10,
       price: 5000,
+      quantity: 1,
     };
 
     service.addToCart(product);
@@ -90,20 +93,20 @@ describe('CartService', () => {
   });
 
   it('คำนวณราคารวมได้ถูกต้องเมื่อมีสินค้าหลายชิ้น', () => {
-    const product1: IProduct = {
+    const product1: ICartItem = {
       _id: '1',
       name: 'คีย์บอร์ด',
-      description: '',
       stock: 10,
       price: 1000,
+      quantity: 1,
     };
 
-    const product2: IProduct = {
+    const product2: ICartItem = {
       _id: '2',
       name: 'เมาส์',
-      description: '',
       stock: 5,
       price: 500,
+      quantity: 1,
     };
 
     service.addToCart(product1);

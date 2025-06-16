@@ -11,11 +11,17 @@ describe('CartComponent', () => {
 
   const mockCart: ICartItem[] = [
     {
-      product: { _id: '1', name: 'ลำโพงบลูทูธ', stock: 120, price: 999 },
+      _id: '1',
+      name: 'ลำโพงบลูทูธ',
+      stock: 120,
+      price: 999,
       quantity: 1,
     },
     {
-      product: { _id: '2', name: 'เม้าส์', stock: 120, price: 100 },
+      _id: '2',
+      name: 'เม้าส์',
+      stock: 120,
+      price: 100,
       quantity: 30,
     },
   ];

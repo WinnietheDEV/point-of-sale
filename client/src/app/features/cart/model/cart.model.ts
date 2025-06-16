@@ -1,6 +1,7 @@
-import { IProduct } from '../../products/models/products.model';
-
 export interface ICartItem {
-  product: IProduct;
+  _id: string;
+  name: string;
+  stock: number;
+  price: number;
   quantity: number;
 }
