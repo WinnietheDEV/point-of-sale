@@ -10,11 +10,17 @@ describe('CheckoutComponent', () => {
 
   const mockCart = signal<ICartItem[]>([
     {
-      product: { name: 'เมาส์', price: 500, stock: 10, description: '' },
+      _id: '3788392',
+      name: 'เมาส์',
+      price: 500,
+      stock: 10,
       quantity: 1,
     },
     {
-      product: { name: 'คีย์บอร์ด', price: 1000, stock: 5, description: '' },
+      _id: '1210929',
+      name: 'คีย์บอร์ด',
+      price: 1000,
+      stock: 5,
       quantity: 1,
     },
   ]);
@@ -22,21 +28,24 @@ describe('CheckoutComponent', () => {
   const mockCartService = {
     cartItems: mockCart.asReadonly(),
     totalPrice: computed(() =>
-      mockCart().reduce(
-        (sum, item) => sum + item.product.price * item.quantity,
-        0
-      )
+      mockCart().reduce((sum, item) => sum + item.price * item.quantity, 0)
     ),
   };
 
   beforeEach(async () => {
     mockCart.set([
       {
-        product: { name: 'เมาส์', price: 500, stock: 10, description: '' },
+        _id: '3788392',
+        name: 'เมาส์',
+        price: 500,
+        stock: 10,
         quantity: 1,
       },
       {
-        product: { name: 'คีย์บอร์ด', price: 1000, stock: 5, description: '' },
+        _id: '1210929',
+        name: 'คีย์บอร์ด',
+        price: 1000,
+        stock: 5,
         quantity: 1,
       },
     ]);
