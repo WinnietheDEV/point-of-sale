@@ -31,12 +31,14 @@ describe('CheckoutModalComponent', () => {
 
   const mockCartService = {
     cartItems: mockCart.asReadonly(),
+    clearCart: jasmine.createSpy('clearCart'),
   };
 
   beforeEach(() => {
     mockCheckoutService = jasmine.createSpyObj('CheckoutService', [
       'makeTransaction',
     ]);
+
     mockCheckoutService.makeTransaction.and.returnValue(
       of({
         products: mockCartService.cartItems(),
@@ -59,37 +61,30 @@ describe('CheckoutModalComponent', () => {
     component = fixture.componentInstance;
   });
 
-  // 1. Input grandTotal
-  it('should accept grandTotal input = 1500', () => {
+  it('รับค่าราคาสุทธิในการชำระเงิน', () => {
     component.grandTotal = 1500;
+    fixture.detectChanges();
     expect(component.grandTotal).toBe(1500);
   });
 
-  // 2. Pay = grandTotal
-  it('should set pay equal to grandTotal', () => {
+  it('กำหนดให้จำนวนที่ชำระพอดีกับราคาสุทธิ', () => {
     component.grandTotal = 1500;
-    component.pay = component.grandTotal;
+    fixture.detectChanges();
     expect(component.pay).toBe(1500);
   });
 
-  // 3. Change calculation
-  it('should calculate change correctly when pay = 1500 and grandTotal = 1500', () => {
+  it('คำนวณเงินทอนจากจำนวนที่ชำระ - ราคาสุทธิ', () => {
     component.grandTotal = 1500;
-    component.pay = 1500;
-    component.change.set(component.pay - component.grandTotal);
     expect(component.change()).toBe(0);
   });
 
-  // 4. onMakeTransaction calls service and closes modal
-  it('should call checkoutService.makeTransaction and close modal', () => {
+  it('ทำรายการชำระเงินและปิด checkout modal เมื่อสั่ง onMakeTransaction', () => {
     const closeModal = jasmine.createSpy();
-    (component as any).closeModal = closeModal;
+    component.onCloseCheckoutModal = closeModal;
 
     component.grandTotal = 1500;
-    component.pay = 1500;
-    component.change.set(0);
     component.paymentMethod.set('เงินสด');
-
+    fixture.detectChanges();
     component.onMakeTransaction();
 
     expect(mockCheckoutService.makeTransaction).toHaveBeenCalledWith({
@@ -100,11 +95,11 @@ describe('CheckoutModalComponent', () => {
       paymentMethod: 'เงินสด',
     });
 
+    expect(mockCartService.clearCart).toHaveBeenCalled();
     expect(closeModal).toHaveBeenCalled();
   });
 
-  // 5. Template: grandTotal rendered
-  it('should display formatted grandTotal in template', () => {
+  it('แสดงราคาสุทธิ', () => {
     component.grandTotal = 1500;
     fixture.detectChanges();
     const grandTotalEl = fixture.debugElement.query(
@@ -114,7 +109,7 @@ describe('CheckoutModalComponent', () => {
   });
 
   // 6. Template: pay rendered
-  it('should display formatted pay in template', () => {
+  it('แสดงจำนวนที่ชำระ', () => {
     component.grandTotal = 1500;
     fixture.detectChanges();
     const payEl = fixture.debugElement.query(
@@ -124,17 +119,16 @@ describe('CheckoutModalComponent', () => {
   });
 
   // 7. Template: change rendered
-  it('should display formatted change in template', () => {
-    component.change.set(200);
+  it('แสดงเงินทอน', () => {
+    component.grandTotal = 1500;
     fixture.detectChanges();
     const changeEl = fixture.debugElement.query(
       By.css('#change-value')
     ).nativeElement;
-    expect(changeEl.textContent).toContain('200');
+    expect(changeEl.textContent).toContain(0);
   });
 
-  // 8. Confirm button is present
-  it('should render confirm checkout button', () => {
+  it('แสดงปุ่มยืนยันชำระเงิน', () => {
     fixture.detectChanges();
     const button = fixture.debugElement.query(
       By.css('#confirm-checkout-btn')
@@ -142,8 +136,7 @@ describe('CheckoutModalComponent', () => {
     expect(button.textContent).toContain('ยืนยันการชำระเงิน');
   });
 
-  // 9. Confirm button click calls onMakeTransaction
-  it('should call onMakeTransaction when confirm button is clicked', () => {
+  it('ทำรายการชำระเงินและปิด checkout modal เมื่อกดปุ่มยืนยันการชำระเงิน', () => {
     spyOn(component, 'onMakeTransaction');
     fixture.detectChanges();
     const button = fixture.debugElement.query(

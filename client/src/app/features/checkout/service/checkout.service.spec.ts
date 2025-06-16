@@ -47,7 +47,7 @@ describe('CheckoutService', () => {
       expect(response).toEqual({ _id: '372732', ...mockTransaction });
     });
 
-    const req = httpMock.expectOne(`${backendUrl}/transactions`);
+    const req = httpMock.expectOne(`${backendUrl}/transaction`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(mockTransaction);
 

@@ -3,6 +3,7 @@ import { CheckoutComponent } from './checkout.component';
 import { computed, signal } from '@angular/core';
 import { ICartItem } from '../cart/model/cart.model';
 import { CartService } from '../cart/service/cart.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('CheckoutComponent', () => {
   let component: CheckoutComponent;
@@ -51,7 +52,7 @@ describe('CheckoutComponent', () => {
     ]);
 
     await TestBed.configureTestingModule({
-      imports: [CheckoutComponent],
+      imports: [CheckoutComponent, HttpClientTestingModule],
       providers: [{ provide: CartService, useValue: mockCartService }],
     }).compileComponents();
 
