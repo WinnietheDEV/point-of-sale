@@ -1,5 +1,5 @@
 export interface IProduct {
-  _id?: string;
+  _id: string;
   name: string;
   stock: number;
   price: number;
@@ -10,12 +10,4 @@ export interface IProductsLists {
   page: number;
   limit: number;
   data: IProduct[];
-}
-
-interface IGetProductsParams {
-  page: number;
-  limit: number;
-  sort: string;
-  order: 'desc' | 'asc';
-  search: string;
 }

@@ -1,4 +1,3 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {
   Component,
   DestroyRef,
@@ -7,10 +6,10 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { CurrencyPipe, DecimalPipe, formatNumber } from '@angular/common';
+import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import { ProductsService } from './services/products.service';
-import { RouterLink } from '@angular/router';
 import { CartService } from '../cart/service/cart.service';
+import { ICartItem } from '../cart/model/cart.model';
 import { IProduct } from './models/products.model';
 
 @Component({
@@ -45,6 +44,7 @@ export class ProductsComponent implements OnInit {
   }
 
   onSelectProduct(product: IProduct): void {
-    this.cartService.addToCart(product);
+    const cartItem = { ...product, description: undefined, quantity: 1 };
+    this.cartService.addToCart(cartItem);
   }
 }
