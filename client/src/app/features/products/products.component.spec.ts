@@ -10,6 +10,7 @@ import { By } from '@angular/platform-browser';
 describe('ProductsComponent', () => {
   let component: ProductsComponent;
   let fixture: ComponentFixture<ProductsComponent>;
+  let getProductsSpy: jasmine.Spy;
 
   const mockProducts: IProduct[] = [
     { _id: '1', name: 'คอมพิวเตอร์', price: 20000, stock: 30 },
@@ -18,33 +19,42 @@ describe('ProductsComponent', () => {
 
   let mockProductsSignal = signal<IProduct[]>([]);
 
-  const mockProductsService = {
-    getProducts: () => {
+  beforeEach(async () => {
+    mockProductsSignal.set([]);
+
+    getProductsSpy = jasmine.createSpy('getProducts').and.callFake(() => {
       mockProductsSignal.set(mockProducts);
       return of(mockProducts);
-    },
-    products: mockProductsSignal.asReadonly(),
-  };
+    });
 
-  beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ProductsComponent],
       providers: [
         provideHttpClient(),
-        { provide: ProductsService, useValue: mockProductsService },
+        {
+          provide: ProductsService,
+          useValue: {
+            getProducts: getProductsSpy,
+            products: mockProductsSignal.asReadonly(),
+          },
+        },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProductsComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.detectChanges(); // triggers ngOnInit
   });
 
-  it('สร้าง products component', () => {
+  it('สร้าง component ได้', () => {
     expect(component).toBeTruthy();
   });
 
-  it('อัพเดทค่า products หลังดึงข้อมูลสินค้า ', () => {
+  it('เรียก getProducts() เมื่อ component ถูกสร้าง', () => {
+    expect(getProductsSpy).toHaveBeenCalled();
+  });
+
+  it('อัพเดทค่า products หลัง getProducts สำเร็จ', () => {
     expect(component.isFetching()).toBeFalse();
     expect(component.productsList()).toEqual(mockProducts);
   });
@@ -65,9 +75,8 @@ describe('ProductsComponent', () => {
     expect(secondCardText).toContain('จำนวนสินค้าในคลัง: 50');
   });
 
-  it('แสดงข้อความ "ไม่มีสินค้า" เมื่อไม่มีข้อมูลสินค้า', () => {
+  it('แสดงข้อความ "ไม่มีสินค้า" เมื่อไม่มีรายการสินค้า', () => {
     mockProductsSignal.set([]);
-
     fixture.detectChanges();
 
     const productCards = fixture.debugElement.queryAll(By.css('.product-card'));
@@ -77,7 +86,7 @@ describe('ProductsComponent', () => {
     expect(emptyText).toContain('ไม่มีสินค้า');
   });
 
-  describe('Products component alternative cases', () => {
+  describe('เมื่อเกิด error จาก service', () => {
     beforeEach(async () => {
       const errorService = {
         getProducts: () => throwError(() => new Error('Fetch failed')),
@@ -96,11 +105,10 @@ describe('ProductsComponent', () => {
 
       fixture = TestBed.createComponent(ProductsComponent);
       component = fixture.componentInstance;
+      fixture.detectChanges();
     });
 
-    it('อัพเดทค่า error และ isFetchign หลังดึงข้อมูลสินค้าแล้วเกิด error', () => {
-      fixture.detectChanges();
-
+    it('อัพเดท isError และ isFetching เป็น false เมื่อเกิด error', () => {
       expect(component.isError()).toBe('Fetch failed');
       expect(component.isFetching()).toBeFalse();
     });
