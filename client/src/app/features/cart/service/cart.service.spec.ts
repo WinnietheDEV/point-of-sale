@@ -47,6 +47,24 @@ describe('CartService', () => {
     expect(cartItems[0].quantity).toBe(2);
   });
 
+  it('ล้างตะกร้ากินค้า', () => {
+    service['_cart'].set([
+      {
+        _id: '1234567',
+        name: 'ตอมพิวเตอร์',
+        stock: 30,
+        price: 1000,
+        quantity: 1,
+      },
+    ]);
+
+    service.clearCart();
+
+    const cartItems = service['_cart']();
+
+    expect(cartItems.length).toBe(0);
+  });
+
   it('แสดง alert ถ้าจำนวนสินค้าเกิน stock', () => {
     const product: ICartItem = {
       _id: '1234567',
