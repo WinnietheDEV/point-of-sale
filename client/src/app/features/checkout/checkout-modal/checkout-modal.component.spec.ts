@@ -92,7 +92,7 @@ describe('CheckoutModalComponent', () => {
       grandTotal: 1500,
       pay: 1500,
       change: 0,
-      paymentMethod: 'เงินสด',
+      paymentMethod: 'cash',
     });
 
     expect(mockCartService.clearCart).toHaveBeenCalled();
