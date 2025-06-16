@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/mongoose';
 import { ProductsService } from './product.service';
-import { Product } from 'src/schemas/product.schema';
+import { Product } from './entities/product.entity';
 
 const mockProducts = [
   { name: 'คอมพิวเตอร์', price: 1000, stock: 30 },
