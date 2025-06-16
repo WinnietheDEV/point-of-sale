@@ -1,0 +1,55 @@
+:host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+}
+
+.modal-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 100%;
+}
+
+.checkout-summary {
+  display: flex;
+  column-gap: 8;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 200px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.total-price {
+  color: #666;
+}
+
+.payment-method {
+  border-bottom: 1px solid #ccc;
+  margin: 0;
+}
+
+.btn-section {
+  height: 20%;
+  width: 100%;
+}
+
+button {
+  height: 100%;
+  width: 100%;
+}

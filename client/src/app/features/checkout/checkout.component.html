@@ -40,3 +40,11 @@
     </button>
   </div>
 </div>
+<div class="checkout-modal-container">
+  @if (isCheckoutModalOpen()) {
+  <app-checkout-modal
+    [grandTotal]="grandTotal()"
+    [onCloseCheckoutModal]="onCloseCheckoutModal"
+  />
+  }
+</div>

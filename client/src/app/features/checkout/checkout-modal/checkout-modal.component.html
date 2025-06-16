@@ -1,30 +1,32 @@
-<p>ชำระด้วย:</p>
-<div class="checkout-summary">
-  <div class="row grand-total">
-    <span id="grand-total-label">ราคาสุทธิ</span>
-    <span id="grand-total-value">
-      {{ grandTotal | currency : "THB" : "symbol-narrow" : "1.2-2" }}</span
-    >
+<div class="modal-box">
+  <p class="payment-method">ชำระด้วย: เงินสด</p>
+  <div class="checkout-summary">
+    <div class="row grand-total">
+      <span id="grand-total-label">ราคาสุทธิ</span>
+      <span id="grand-total-value">
+        {{ grandTotal | currency : "THB" : "symbol-narrow" : "1.2-2" }}
+      </span>
+    </div>
+    <div class="row pay">
+      <span id="pay-label">จำนวนที่ชำระ</span>
+      <span id="pay-value">
+        {{ pay | currency : "THB" : "symbol-narrow" : "1.2-2" }}
+      </span>
+    </div>
+    <div class="row change">
+      <span id="change-label">เงินทอน</span>
+      <span id="change-value">
+        {{ change() | currency : "THB" : "symbol-narrow" : "1.2-2" }}
+      </span>
+    </div>
   </div>
-  <div class="row pay">
-    <span id="pay-lable">จำนวนที่ชำระ</span>
-    <span id="pay-value">
-      {{ pay | currency : "THB" : "symbol-narrow" : "1.2-2" }}</span
+  <div class="btn-section">
+    <button
+      class="btn-primary"
+      id="confirm-checkout-btn"
+      (click)="onMakeTransaction()"
     >
+      ยืนยันการชำระเงิน
+    </button>
   </div>
-  <div class="row change">
-    <span id="change-label">เงินทอน</span>
-    <span id="change-value">
-      {{ change() | currency : "THB" : "symbol-narrow" : "1.2-2" }}</span
-    >
-  </div>
-</div>
-<div class="btn-section">
-  <button
-    class="btn-primary"
-    id="confirm-checkout-btn"
-    (click)="onMakeTransaction()"
-  >
-    ยืนยันการชำระเงิน
-  </button>
 </div>

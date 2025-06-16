@@ -6,10 +6,11 @@ import {
 } from '../../utils/number-format.util';
 import { CartService } from '../cart/service/cart.service';
 import { CurrencyPipe } from '@angular/common';
+import { CheckoutModalComponent } from './checkout-modal/checkout-modal.component';
 
 @Component({
   selector: 'app-checkout',
-  imports: [FormsModule, CurrencyPipe],
+  imports: [FormsModule, CurrencyPipe, CheckoutModalComponent],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.css',
 })
@@ -29,6 +30,10 @@ export class CheckoutComponent {
   onOpenCheckoutModal() {
     this.isCheckoutModalOpen.set(true);
   }
+
+  onCloseCheckoutModal = () => {
+    this.isCheckoutModalOpen.set(false);
+  };
 
   onDiscountInput(event: Event): void {
     const input = event.target as HTMLInputElement;

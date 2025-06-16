@@ -16,18 +16,30 @@ export class CheckoutModalComponent implements OnInit {
   change = signal<number>(0);
   private checkoutService = inject(CheckoutService);
   private cartService = inject(CartService);
+  @Input() onCloseCheckoutModal!: () => void;
 
   ngOnInit() {
     this.pay = this.grandTotal;
+    this.change.set(this.pay - this.grandTotal);
   }
 
   onMakeTransaction() {
-    this.checkoutService.makeTransaction({
-      products: this.cartService.cartItems(),
-      grandTotal: this.grandTotal,
-      pay: this.pay,
-      change: this.change(),
-      paymentMethod: this.paymentMethod(),
-    });
+    this.checkoutService
+      .makeTransaction({
+        products: this.cartService.cartItems(),
+        grandTotal: this.grandTotal,
+        pay: this.pay,
+        change: this.change(),
+        paymentMethod: this.paymentMethod() === 'เงินสด' ? 'cash' : '',
+      })
+      .subscribe({
+        next: (res) => {
+          this.cartService.clearCart();
+          this.onCloseCheckoutModal();
+        },
+        error: (err) => {
+          console.error('Transaction failed:', err.message);
+        },
+      });
   }
 }
