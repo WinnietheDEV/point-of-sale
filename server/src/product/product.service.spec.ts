@@ -4,16 +4,19 @@ import { ProductsService } from './product.service';
 import { Product } from './entities/product.entity';
 
 const mockProducts = [
-  { name: 'คอมพิวเตอร์', price: 1000, stock: 30 },
-  { name: 'พัดลม', price: 500, stock: 50 },
+  { _id: '1', name: 'คอมพิวเตอร์', price: 1000, stock: 30 },
+  { _id: '2', name: 'พัดลม', price: 500, stock: 50 },
 ];
+
 const mockProductModel = {
   find: jest.fn().mockReturnThis(),
   select: jest.fn().mockReturnThis(),
   lean: jest.fn().mockReturnThis(),
   exec: jest.fn().mockResolvedValue(mockProducts),
   insertMany: jest.fn(),
+  updateOne: jest.fn(),
 };
+
 describe('ProductsService', () => {
   let service: ProductsService;
 
@@ -29,7 +32,6 @@ describe('ProductsService', () => {
     }).compile();
 
     service = module.get<ProductsService>(ProductsService);
-
     jest.clearAllMocks();
   });
 
@@ -61,6 +63,38 @@ describe('ProductsService', () => {
       const result = await service.createMany(newProducts);
       expect(result).toEqual(newProducts);
       expect(mockProductModel.insertMany).toHaveBeenCalledWith(newProducts);
+    });
+  });
+
+  describe('findManyByIds', () => {
+    it('เรียก find ด้วย id array', async () => {
+      const ids = ['1', '2'];
+
+      mockProductModel.find.mockReturnValue({
+        exec: jest.fn().mockResolvedValue(mockProducts),
+      });
+
+      const result = await service.findManyByIds(ids);
+
+      expect(mockProductModel.find).toHaveBeenCalledWith({ _id: { $in: ids } });
+      expect(result).toEqual(mockProducts);
+    });
+  });
+
+  describe('updateStock', () => {
+    it('เรียก updateOne ด้วยค่า stock ที่ถูกต้อง', async () => {
+      const productId = '1';
+      const stock = 20;
+
+      mockProductModel.updateOne.mockResolvedValueOnce({ modifiedCount: 1 });
+
+      const result = await service.updateStock(productId, stock);
+
+      expect(mockProductModel.updateOne).toHaveBeenCalledWith(
+        { _id: productId },
+        { $set: { stock } },
+      );
+      expect(result).toEqual({ modifiedCount: 1 });
     });
   });
 });

@@ -3,8 +3,10 @@ import { TransactionService } from './transaction.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { Transaction } from './entities/transaction.entity';
+import { ClientSession, Connection } from 'mongoose';
+import { ProductsService } from 'src/product/product.service';
 
-const mockTransaction: Transaction = {
+const mockTransactionData: Transaction = {
   products: [{ _id: '372732', name: 'คอมพิวเตอร์', price: 20000, quantity: 1 }],
   grandTotal: 20000,
   paymentMethod: 'cash',
@@ -14,6 +16,22 @@ const mockTransaction: Transaction = {
 
 const mockTransactionModel = {
   create: jest.fn(),
+};
+
+const mockProductService = {
+  findManyByIds: jest.fn(),
+  updateStock: jest.fn(),
+};
+
+const mockSession: Partial<ClientSession> = {
+  startTransaction: jest.fn(),
+  commitTransaction: jest.fn(),
+  abortTransaction: jest.fn(),
+  endSession: jest.fn(),
+};
+
+const mockConnection = {
+  startSession: jest.fn().mockResolvedValue(mockSession),
 };
 
 describe('TransactionService', () => {
@@ -27,6 +45,14 @@ describe('TransactionService', () => {
           provide: getModelToken('Transaction'),
           useValue: mockTransactionModel,
         },
+        {
+          provide: ProductsService,
+          useValue: mockProductService,
+        },
+        {
+          provide: Connection,
+          useValue: mockConnection,
+        },
       ],
     }).compile();
 
@@ -36,7 +62,7 @@ describe('TransactionService', () => {
   });
 
   describe('createTransaction', () => {
-    it('เรียก model.create และคืนค่าข้อมูล transaction', async () => {
+    it('สร้าง transaction และอัปเดต stock', async () => {
       const dto: CreateTransactionDto = {
         products: [
           { _id: '372732', name: 'คอมพิวเตอร์', price: 20000, quantity: 1 },
@@ -47,13 +73,22 @@ describe('TransactionService', () => {
         change: 0,
       };
 
-      mockTransactionModel.create.mockResolvedValueOnce(mockTransaction);
+      const mockProductsFromDb = [{ _id: '372732', stock: 10 }];
+
+      mockTransactionModel.create.mockResolvedValueOnce(mockTransactionData);
+      mockProductService.findManyByIds.mockResolvedValueOnce(
+        mockProductsFromDb,
+      );
+      mockProductService.updateStock.mockResolvedValueOnce({
+        modifiedCount: 1,
+      });
 
       const result = await service.createTransaction(dto);
 
       expect(mockTransactionModel.create).toHaveBeenCalledWith(dto);
-      expect(result).toEqual(mockTransaction);
-      expect(result.products.length).toBe(1);
+      expect(mockProductService.findManyByIds).toHaveBeenCalledWith(['372732']);
+      expect(mockProductService.updateStock).toHaveBeenCalledWith('372732', 9);
+      expect(result).toEqual(mockTransactionData);
     });
   });
 });
