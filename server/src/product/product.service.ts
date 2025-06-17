@@ -24,4 +24,12 @@ export class ProductsService {
   async createMany(products: Product[]): Promise<Product[]> {
     return await this.productModel.insertMany(products);
   }
+
+  async findManyByIds(ids: string[]) {
+    return this.productModel.find({ _id: { $in: ids } }).exec();
+  }
+
+  async updateStock(productId: string, stock: number) {
+    return this.productModel.updateOne({ _id: productId }, { $set: { stock } });
+  }
 }
