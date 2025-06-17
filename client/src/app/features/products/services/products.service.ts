@@ -13,11 +13,15 @@ export class ProductsService {
   private _products = signal<IProduct[]>([]);
   products = this._products.asReadonly();
 
-  getProducts() {
-    return this.fetchProducts(
-      `${environment.backendUrl || 'http://localhost:3000'}/products`,
-      'Something went wrong'
-    ).pipe(
+  getProducts(keyword?: string) {
+    const baseUrl = `${
+      environment.backendUrl || 'http://localhost:3000'
+    }/products`;
+    const url = keyword
+      ? `${baseUrl}?keyword=${encodeURIComponent(keyword)}`
+      : baseUrl;
+
+    return this.fetchProducts(url, 'Something went wrong').pipe(
       tap({
         next: (products) => {
           this._products.set(products);

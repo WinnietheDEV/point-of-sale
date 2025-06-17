@@ -9,8 +9,21 @@ export class ProductsService {
     @InjectModel(Product.name) private productModel: Model<Product>,
   ) {}
 
-  async findAll(): Promise<Product[]> {
-    return this.productModel.find().select('name price stock').lean().exec();
+  async findAll(keyword?: string): Promise<Product[]> {
+    const query = keyword
+      ? {
+          $or: [
+            { name: { $regex: keyword, $options: 'i' } },
+            { description: { $regex: keyword, $options: 'i' } },
+          ],
+        }
+      : {};
+
+    return this.productModel
+      .find(query)
+      .select('name price stock')
+      .lean()
+      .exec();
   }
 
   async findOneById(id: string): Promise<Product> {

@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ProductsService } from './product.service';
 import { Product } from './entities/product.entity';
 
@@ -7,8 +7,8 @@ export class ProductsController {
   constructor(private readonly productService: ProductsService) {}
 
   @Get()
-  getProducts(): Promise<Product[]> {
-    return this.productService.findAll();
+  getProducts(@Query('keyword') keyword?: string): Promise<Product[]> {
+    return this.productService.findAll(keyword);
   }
 
   @Get('/:id')
