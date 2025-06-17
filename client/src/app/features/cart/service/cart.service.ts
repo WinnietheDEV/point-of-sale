@@ -1,5 +1,6 @@
 import { computed, effect, Injectable, signal } from '@angular/core';
 import { ICartItem } from '../model/cart.model';
+import { IProduct } from '../../products/models/products.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +12,10 @@ export class CartService {
     this._cart().reduce((sum, item) => sum + item.price * item.quantity, 0)
   );
 
-  addToCart(product: ICartItem): void {
+  addToCart(product: IProduct): void {
+    const newCartItem: ICartItem = { ...product, quantity: 1 };
     const itemIndex = this._cart().findIndex(
-      (item) => item._id === product._id
+      (item) => item._id === newCartItem._id
     );
     if (itemIndex !== -1) {
       const currentCart = [...this._cart()];
@@ -29,8 +31,8 @@ export class CartService {
         alert('สินค้าเกินจำนวนในสต็อก');
       }
     } else {
-      if (product.stock >= 1) {
-        this._cart.update((cart) => [...cart, { ...product }]);
+      if (newCartItem.stock >= 1) {
+        this._cart.update((cart) => [...cart, { ...newCartItem }]);
       } else {
         alert('สินค้าเกินจำนวนในสต็อก');
       }

@@ -36,9 +36,12 @@ export class CheckoutModalComponent implements OnInit {
         next: (res) => {
           this.cartService.clearCart();
           this.onCloseCheckoutModal();
+          alert('ชำระเงินสำเร็จ');
         },
         error: (err) => {
           console.error('Transaction failed:', err.message);
+          this.onCloseCheckoutModal();
+          alert('ชำระเงินไม่สำเร็จ');
         },
       });
   }

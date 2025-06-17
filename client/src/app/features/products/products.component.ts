@@ -44,7 +44,6 @@ export class ProductsComponent implements OnInit {
   }
 
   onSelectProduct(product: IProduct): void {
-    const cartItem = { ...product, description: undefined, quantity: 1 };
-    this.cartService.addToCart(cartItem);
+    this.cartService.addToCart(product);
   }
 }
