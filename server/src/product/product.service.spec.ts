@@ -49,6 +49,49 @@ describe('ProductsService', () => {
       expect(result).toEqual(mockProducts);
       expect(mockProductModel.find).toHaveBeenCalled();
     });
+    it('เรียก model.find() และคืนค่า products ที่ name มี keyword ที่ใช้ค้นหาเป็นส่วนประกอบ', async () => {
+      const keyword = 'คอม';
+      const expectedQuery = {
+        $or: [
+          { name: { $regex: keyword, $options: 'i' } },
+          { description: { $regex: keyword, $options: 'i' } },
+        ],
+      };
+
+      mockProductModel.find.mockReturnValue({
+        select: jest.fn().mockReturnValue({
+          lean: jest.fn().mockReturnValue({
+            exec: jest.fn().mockResolvedValue(mockProducts),
+          }),
+        }),
+      });
+
+      const result = await service.findAll(keyword);
+      expect(result).toEqual(mockProducts);
+      expect(mockProductModel.find).toHaveBeenCalledWith(expectedQuery);
+    });
+
+    it('เรียก model.find() และคืนค่า products ที่ description มี keyword ที่ใช้ค้นหาเป็นส่วนประกอบ', async () => {
+      const keyword = 'ระบาย';
+      const expectedQuery = {
+        $or: [
+          { name: { $regex: keyword, $options: 'i' } },
+          { description: { $regex: keyword, $options: 'i' } },
+        ],
+      };
+
+      mockProductModel.find.mockReturnValue({
+        select: jest.fn().mockReturnValue({
+          lean: jest.fn().mockReturnValue({
+            exec: jest.fn().mockResolvedValue(mockProducts),
+          }),
+        }),
+      });
+
+      const result = await service.findAll(keyword);
+      expect(result).toEqual(mockProducts);
+      expect(mockProductModel.find).toHaveBeenCalledWith(expectedQuery);
+    });
   });
 
   describe('createMany', () => {

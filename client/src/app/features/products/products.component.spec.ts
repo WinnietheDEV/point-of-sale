@@ -6,6 +6,7 @@ import { of, throwError } from 'rxjs';
 import { IProduct } from './models/products.model';
 import { signal } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { fakeAsync, tick } from '@angular/core/testing';
 
 describe('ProductsComponent', () => {
   let component: ProductsComponent;
@@ -59,6 +60,18 @@ describe('ProductsComponent', () => {
     expect(component.productsList()).toEqual(mockProducts);
   });
 
+  it('เรียก getProducts ด้วย keyword ใหม่ เมื่อ keyword มีการเปลี่ยนแปลง', fakeAsync(() => {
+    expect(getProductsSpy).toHaveBeenCalledTimes(1);
+
+    const newKeyword = 'คอมพิวเตอร์';
+    component.keyword.set(newKeyword);
+    fixture.detectChanges();
+
+    tick(700);
+    expect(getProductsSpy).toHaveBeenCalledTimes(2);
+    expect(getProductsSpy).toHaveBeenCalledWith(newKeyword);
+  }));
+
   it('แสดงรายการสินค้าตามข้อมูลสินค้าที่มี พร้อมข้อมูลที่เกี่ยวข้องของสินค้าแต่ละตัว', () => {
     const productCards = fixture.debugElement.queryAll(By.css('.product-card'));
     expect(productCards.length).toBe(2);
@@ -84,6 +97,20 @@ describe('ProductsComponent', () => {
 
     const emptyText = fixture.debugElement.nativeElement.textContent;
     expect(emptyText).toContain('ไม่มีสินค้า');
+  });
+
+  it('แสดงช่องค้นหา และแสดงคำที่พิมพ์ในช่องค้นหา', () => {
+    const input = fixture.debugElement.query(
+      By.css('#search-input')
+    ).nativeElement;
+
+    expect(input).toBeTruthy();
+    const searchTerm = 'คอมพิวเตอร์';
+    input.value = searchTerm;
+    input.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    expect(component.keyword()).toBe(searchTerm);
   });
 
   describe('เมื่อเกิด error จาก service', () => {

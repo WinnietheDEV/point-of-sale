@@ -31,15 +31,28 @@ describe('ProductsController', () => {
     }).compile();
 
     controller = module.get<ProductsController>(ProductsController);
-
     jest.clearAllMocks();
   });
 
   describe('getProducts', () => {
-    it('เรียก service.findAll และคืนค่า products ทั้งหมด', async () => {
-      const result = await controller.getProducts();
+    it('ควรคืนผลลัพธ์ทั้งหมดเมื่อไม่มี keyword (query param)', async () => {
+      const result = await controller.getProducts(undefined); // keyword query param is undefined
       expect(result).toEqual(mockProducts);
-      expect(mockProductsService.findAll).toHaveBeenCalled();
+      expect(mockProductsService.findAll).toHaveBeenCalledWith(undefined);
+    });
+
+    it('ควรคืนผลลัพธ์ที่ชื่อสินค้ามี keyword (query param)', async () => {
+      const keyword = 'คอม';
+      const result = await controller.getProducts(keyword); // simulate query ?keyword=คอม
+      expect(mockProductsService.findAll).toHaveBeenCalledWith(keyword);
+      expect(result).toEqual(mockProducts);
+    });
+
+    it('ควรคืนผลลัพธ์ที่คำอธิบายสินค้ามี keyword (query param)', async () => {
+      const keyword = 'ระบาย';
+      const result = await controller.getProducts(keyword); // simulate query ?keyword=ระบาย
+      expect(mockProductsService.findAll).toHaveBeenCalledWith(keyword);
+      expect(result).toEqual(mockProducts);
     });
   });
 });

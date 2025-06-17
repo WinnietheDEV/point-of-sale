@@ -40,6 +40,22 @@ describe('ProductsService', () => {
     req.flush(mockProducts);
   });
 
+  it('ดึงข้อมูลสินค้าด้วย keyword และเรียก API GET พร้อม query string', () => {
+    const keyword = 'เม้าส์';
+    const encodedKeyword = encodeURIComponent(keyword);
+
+    service.getProducts(keyword).subscribe((products) => {
+      expect(products).toEqual(mockProducts);
+      expect(service.products()).toEqual(mockProducts);
+    });
+
+    const req = httpMock.expectOne(
+      `http://localhost:3001/products?keyword=${encodedKeyword}`
+    );
+    expect(req.request.method).toBe('GET');
+    req.flush(mockProducts);
+  });
+
   it('โยน error เมื่อการเรียก API เกิด error และคืนค่าข้อความที่กำหนด', () => {
     const errorMsg = 'Something went wrong';
 
