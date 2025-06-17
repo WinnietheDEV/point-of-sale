@@ -78,12 +78,16 @@ describe('CheckoutModalComponent', () => {
     expect(component.change()).toBe(0);
   });
 
-  it('ทำรายการชำระเงินและปิด checkout modal เมื่อสั่ง onMakeTransaction', () => {
+  it('ทำรายการชำระเงินและปิด checkout modal และแสดง alert เมื่อสั่ง onMakeTransaction', () => {
     const closeModal = jasmine.createSpy();
     component.onCloseCheckoutModal = closeModal;
 
+    spyOn(window, 'alert');
+
     component.grandTotal = 1500;
+    component.pay = 1500;
     component.paymentMethod.set('เงินสด');
+
     fixture.detectChanges();
     component.onMakeTransaction();
 
@@ -97,6 +101,7 @@ describe('CheckoutModalComponent', () => {
 
     expect(mockCartService.clearCart).toHaveBeenCalled();
     expect(closeModal).toHaveBeenCalled();
+    expect(window.alert).toHaveBeenCalledWith('ชำระเงินสำเร็จ'); // <-- Check alert
   });
 
   it('แสดงราคาสุทธิ', () => {
